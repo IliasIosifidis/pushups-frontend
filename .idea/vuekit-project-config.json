@@ -1,0 +1,13 @@
+{
+  "projectId": "5631ae4f",
+  "projectName": "pushups-frontend",
+  "enabledLibraryNames": [],
+  "enableComponentCompletion": true,
+  "enableAttributeCompletion": true,
+  "enableEventCompletion": true,
+  "enableSlotCompletion": true,
+  "enableHoverDocumentation": true,
+  "enableRightClickDocumentation": true,
+  "enableCaching": true,
+  "enableDebugMode": false
+}
