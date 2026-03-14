@@ -2,7 +2,7 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Playpen Sans ', 'cursive'],
+                sans: ['Roboto', 'cursive'],
             },
             colors: {
                 primary: '#7c3aed',

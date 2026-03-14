@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <div class="min-h-screen bg-gradient-to-b from-purple-600 from-10% to-black">
+  <div class="h-full bg-gradient-to-b from-violet-600 from-10% to-gray-950">
     <slot />
   </div>
 </template>
