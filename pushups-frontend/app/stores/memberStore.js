@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import {useApi} from "~/components/useApi.js";
+import {useApi} from "~/pagescomposables/useApi.js";
 
 export const useMemberStore = defineStore('members', {
   state: () => ({
@@ -13,23 +13,35 @@ export const useMemberStore = defineStore('members', {
   }),
 
   actions: {
-    async fetchMembers(page = 0, size = 20) {
+    async fetchActiveMembers(page = 0, size = 20) {
       this.loading = true
       this.error = null
       try {
         const api = useApi()
-        const { data } = await api.get('/member', {
+        const { data } = await api.get('/member/active', {
           params: { page, size },
         })
         this.members = data.content
-        this.totalElements = data.totalElements
-        this.totalPages = data.totalPages
-        this.currentPage = data.number
-        this.pageSize = data.size
+        this.totalElements = data.page.totalElements
+        this.totalPages = data.page.totalPages
+        this.currentPage = data.page.number
+        this.pageSize = data.page.size
       } catch (e) {
         this.error = e.response?.data?.message || 'Failed to fetch members'
       } finally {
         this.loading = false
+      }
+    },
+
+    async prevPage() {
+      if (this.currentPage > 0) {
+        await this.fetchActiveMembers(this.currentPage - 1)
+      }
+    },
+
+    async nextPage() {
+      if (this.currentPage < this.totalPages){
+        await this.fetchActiveMembers(this.currentPage + 1)
       }
     },
 
@@ -39,7 +51,7 @@ export const useMemberStore = defineStore('members', {
       try {
         const api = useApi()
         const { data } = await api.post('/member', member)
-        await this.fetchMembers(this.currentPage, this.pageSize)
+        await this.fetchActiveMembers(this.currentPage, this.pageSize)
         return data
       } catch (e) {
         this.error = e.response?.data?.message || 'Failed to create member'
@@ -55,11 +67,24 @@ export const useMemberStore = defineStore('members', {
       try {
         const api = useApi()
         const { data } = await api.put(`/member/${id}`, member)
-        await this.fetchMembers(this.currentPage, this.pageSize)
+        await this.fetchActiveMembers(this.currentPage, this.pageSize)
         return data
       } catch (e) {
         this.error = e.response?.data?.message || 'Failed to update member'
         throw e
+      } finally {
+        this.loading = false
+      }
+    },
+    async toggleActive(id){
+      this.loading = true
+      this.error = null
+      try {
+        const api = useApi()
+        await api.patch(`/member/${id}`)
+        await this.fetchActiveMembers(this.currentPage, this.pageSize)
+      } catch (e){
+        this.error = e.response?.data?.message || 'Failed to activate/ deactivate this member'
       } finally {
         this.loading = false
       }
@@ -71,7 +96,7 @@ export const useMemberStore = defineStore('members', {
       try {
         const api = useApi()
         await api.delete(`/member/${id}`)
-        await this.fetchMembers(this.currentPage, this.pageSize)
+        await this.fetchActiveMembers(this.currentPage, this.pageSize)
       } catch (e) {
         this.error = e.response?.data?.message || 'Failed to delete member'
         throw e
@@ -86,13 +111,13 @@ export const useMemberStore = defineStore('members', {
       try {
         const api = useApi()
         const { data } = await api.get('/member/search', {
-          params: { query, page, size },
+          params: { name:query, page, size },
         })
         this.members = data.content
-        this.totalElements = data.totalElements
-        this.totalPages = data.totalPages
-        this.currentPage = data.number
-        this.pageSize = data.size
+        this.totalElements = data.page.totalElements
+        this.totalPages = data.page.totalPages
+        this.currentPage = data.page.number
+        this.pageSize = data.page.size
       } catch (e) {
         this.error = e.response?.data?.message || 'Failed to search members'
       } finally {

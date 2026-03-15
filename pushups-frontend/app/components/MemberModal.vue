@@ -15,17 +15,16 @@ const form = ref({
   firstName: '',
   lastName: '',
   email: '',
-  phone: '',
+  phoneNumber: '',
 })
 
 watch(() => props.show, (val) => {
   if (val && props.member) {
     form.value = { ...props.member }
   } else if (val) {
-    form.value = { firstName: '', lastName: '', email: '', phone: '' }
+    form.value = { firstName: '', lastName: '', email: '', phoneNumber: '' }
   }
 })
-
 const isEdit = () => !!props.member
 
 const save = async () => {
@@ -70,7 +69,7 @@ const save = async () => {
             class="bg-white/10 rounded px-3 py-2 outline-none focus:ring-2 focus:ring-purple-500"
         />
         <input
-            v-model="form.phone"
+            v-model="form.phoneNumber"
             placeholder="Phone"
             class="bg-white/10 rounded px-3 py-2 outline-none focus:ring-2 focus:ring-purple-500"
         />

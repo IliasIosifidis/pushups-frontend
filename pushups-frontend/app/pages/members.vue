@@ -3,7 +3,9 @@ import { useMemberStore } from '~/stores/memberStore'
 
 const memberStore = useMemberStore()
 
-await memberStore.fetchMembers()
+onMounted(() => {
+  memberStore.fetchActiveMembers()
+})
 </script>
 
 <template>
@@ -28,12 +30,11 @@ await memberStore.fetchMembers()
         </span>
       </div>
 
-       Pagination
       <div class="flex justify-center gap-4 mt-6">
         <button
             :disabled="memberStore.currentPage === 0"
             class="px-4 py-2 bg-white/10 rounded disabled:opacity-30"
-            @click="memberStore.fetchMembers(memberStore.currentPage - 1)"
+            @click="memberStore.fetchActiveMembers(memberStore.currentPage - 1)"
         >
           Previous
         </button>
@@ -43,7 +44,7 @@ await memberStore.fetchMembers()
         <button
             :disabled="memberStore.currentPage + 1 >= memberStore.totalPages"
             class="px-4 py-2 bg-white/10 rounded disabled:opacity-30"
-            @click="memberStore.fetchMembers(memberStore.currentPage + 1)"
+            @click="memberStore.fetchActiveMembers(memberStore.currentPage + 1)"
         >
           Next
         </button>

@@ -4,20 +4,14 @@
 
 <template>
   <div class="w-full min-h-screen flex flex-col p-8">
-    <div class="grid grid-cols-6 items-center w-full justify-center">
-      <div class="relative col-span-1 h-48 overflow-hidden">
+    <div class="grid grid-cols-6 items-end w-full justify-center">
+      <p class="col-span-1"></p>
+      <div class="relative col-span-4 h-102">
         <img
-            src="/pushups.jpg"
-            class="w-full h-full object-cover object-[30%_70%] opacity-70"
+            src="/MainLogo.png"
+            class="w-full h-full "
         />
-        <!-- Top fade to purple -->
-        <div class="absolute inset-0 bg-gradient-to-b from-purple-600 via-transparent to-transparent h-1/8"></div>
-        <!-- Bottom fade to black -->
-        <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black via-black/70 to-transparent h-1/8"></div>
       </div>
-      <p class="col-span-1"></p>
-      <h1 class="col-span-2 text-8xl text-center">Pushups</h1>
-      <p class="col-span-1"></p>
       <p class="col-span-1 text-2xl bg-emerald-300 hover:bg-amber-200 text-black hover:text-gray-700 cursor-pointer rounded-xl text-center">Login</p>
     </div>
 
