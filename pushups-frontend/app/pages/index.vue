@@ -24,8 +24,8 @@
 
     <!-- Bottom row -->
     <div class="grid grid-cols-6 flex-1 border border-t-0 border-white/20 divide-x divide-white/20">
-      <div class="col-span-1 p-4 text-center">Classes List</div>
-      <div class="col-span-4 p-4 text-center">Calendar</div>
+      <div class="col-span-1 p-4 text-center"><ClassList /></div>
+      <div class="col-span-4 p-4 text-center"><WeeklyCalendar /></div>
       <div class="col-span-1 p-4 text-center"><MemberList /></div>
     </div>
   </div>
