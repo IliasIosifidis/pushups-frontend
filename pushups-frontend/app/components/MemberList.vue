@@ -11,6 +11,8 @@ onMounted(() => {
 const showModal = ref(false)
 const selectedMember = ref(null)
 const searchQuery = ref('')
+const showStatsModal = ref(false)
+const statsMember = ref(null)
 let searchTimeout = null
 
 function searchMembers() {
@@ -38,6 +40,11 @@ const closeModal = () => {
   showModal.value = false
   selectedMember.value = null
 }
+
+function openStats(member) {
+  statsMember.value = member
+  showStatsModal.value = true
+}
 </script>
 
 <template>
@@ -59,7 +66,9 @@ const closeModal = () => {
 
     <div v-for="member in memberStore.members" :key="member.id" class="group flex justify-between items-center cursor-pointer">
       <div class="">
-        <p class="font-semibold text-left">{{ member.firstName }} {{ member.lastName }}</p>
+        <p class="font-semibold text-left cursor-pointer hover:text-purple-400"
+           @click="openStats(member)">
+          {{ member.firstName }} {{ member.lastName }}</p>
         <p class="text-sm text-left text-gray-200 opacity-0 group-hover:opacity-100 transition-opacity duration-300 line-clamp-1 hidden group-hover:block">
           {{ member.phoneNumber }}
         </p>
@@ -91,6 +100,11 @@ const closeModal = () => {
           class="text-xs bg-gray-700 hover:bg-gray-600 px-3 py-1 rounded disabled:opacity-30"
       >Next →</button>
     </div>
+    <MemberStatsModal
+        :show="showStatsModal"
+        :member="statsMember"
+        @close="showStatsModal = false"
+    />
 
     <MemberModal
         :show="showModal"
