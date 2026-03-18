@@ -1,8 +1,10 @@
 <script setup>
 import { onMounted, computed, ref } from 'vue'
 import { useBookingStore } from '~/stores/bookingStore'
+import { useAuthStore } from '~/stores/authStore'
 
 const bookingStore = useBookingStore()
+const authStore = useAuthStore()
 const showBookingModal = ref(false)
 const selectedClassId = ref(null)
 const selectedClassName = ref('')
@@ -28,6 +30,11 @@ const dates = computed(() => {
   if (!bookingStore.weekData?.days) return []
   return Object.keys(bookingStore.weekData.days).sort()
 })
+async function bookSelf(date, slotIndex) {
+  const cell = getCell(date, slotIndex)
+  if (!cell) return
+  await bookingStore.addBooking(authStore.user.id, cell.classId, date)
+}
 function totalPerClass(slotIndex) {
   if (!bookingStore.weekData?.days) return 0
   return Object.values(bookingStore.weekData.days).reduce((sum, day) => {
@@ -66,6 +73,11 @@ const weekLabel = computed(() => {
 
 <template>
   <div class="w-full">
+    <!--    Failed to Book Toast-->
+    <div v-if="bookingStore.toast"
+         class="fixed top-4 right-4 z-50 bg-red-600 text-white px-4 py-2 rounded shadow-lg">
+      {{ bookingStore.toast }}
+    </div>
     <!-- Week navigation -->
     <div class="flex items-center justify-center gap-4 mb-4">
       <button
@@ -117,7 +129,13 @@ const weekLabel = computed(() => {
                   {{ getCell(date, slotIndex).members.length }}/{{ getCell(date, slotIndex).maxCapacity || 20 }}
                 </p>
                 <button
+                    v-if="authStore.user?.role === 'ADMIN'"
                     @click="openBooking(date, slotIndex)"
+                    class="text-emerald-400 text-2xl hover:text-purple-400 cursor-pointer"
+                >+</button>
+                <button
+                    v-else-if="authStore.user"
+                    @click="bookSelf(date, slotIndex)"
                     class="text-emerald-400 text-2xl hover:text-purple-400 cursor-pointer"
                 >+</button>
               </div>
@@ -128,6 +146,7 @@ const weekLabel = computed(() => {
               >
                 <span>{{ member.firstName }} {{ member.lastName }}</span>
                 <button
+                    v-if="authStore.user?.role === 'ADMIN'"
                     @click="bookingStore.deleteBooking(member.bookingId)"
                     class="text-red-500 hover:text-red-400 text-sm ml-2"
                 >−</button>

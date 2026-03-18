@@ -7,6 +7,7 @@ export const useBookingStore = defineStore('bookings', {
     weekStart: null,
     loading: false,
     error: null,
+    toast: null,
   }),
 
   actions: {
@@ -60,7 +61,8 @@ export const useBookingStore = defineStore('bookings', {
         await api.post('/booking', { memberId, gymClassId, date })
         await this.fetchWeek(this.weekStart)
       } catch (e) {
-        this.error = e.response?.data?.message || 'Failed to add booking'
+        this.toast = e.response?.data?.message || 'Failed to add booking'
+        setTimeout(() => { this.toast = null }, 3000)
       }
     },
     async deleteBooking(bookingId) {
