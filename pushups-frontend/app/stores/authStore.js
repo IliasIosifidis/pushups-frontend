@@ -34,7 +34,7 @@ export const useAuthStore = defineStore('auth', {
 
     logout() {
       this.user = null
-      window.location.href = 'http://localhost:8080/logout'
+      window.location.href = 'https://pushupsbackend-production.up.railway.app/logout'
     },
   },
 })

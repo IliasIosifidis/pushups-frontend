@@ -17,7 +17,7 @@ authStore.fetchUser()
       </div>
       <div class="col-span-1 text-center">
         <a v-if="!authStore.user"
-           href="http://localhost:8080/oauth2/authorization/google"
+           href="https://pushupsbackend-production.up.railway.app/oauth2/authorization/google"
            class="text-md bg-emerald-300 hover:bg-amber-200 text-black hover:text-gray-700 cursor-pointer rounded-xl px-4 py-1">
           Login
         </a>
