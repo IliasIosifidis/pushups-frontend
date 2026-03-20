@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { useApi } from '~/pagescomposables/useApi.js'
+import { useApi } from '~/composables/useApi.js'
 
 const DAYS = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY']
 

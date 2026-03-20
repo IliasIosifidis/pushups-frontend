@@ -18,14 +18,13 @@ const DAY_LABELS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
 
 const timeSlots = computed(() => {
   if (!bookingStore.weekData?.days) return []
-  const firstDay = Object.values(bookingStore.weekData.days)[0]
+  const firstDay = Object.values(bookingStore.weekData.days).find(day => day.length > 0)
   if (!firstDay) return []
   return firstDay.map(c => ({
-    time: c.startTime.slice(0, 5),
+    time: (c.startTime || c.time).slice(0, 5),
     className: c.className,
   }))
 })
-
 const dates = computed(() => {
   if (!bookingStore.weekData?.days) return []
   return Object.keys(bookingStore.weekData.days).sort()

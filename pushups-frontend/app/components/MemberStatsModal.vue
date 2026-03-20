@@ -2,7 +2,7 @@
 import { ref, watch } from 'vue'
 import { Bar } from 'vue-chartjs'
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip } from 'chart.js'
-import { useApi } from '~/pagescomposables/useApi.js'
+import { useApi } from '~/composables/useApi.js'
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip)
 
