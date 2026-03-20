@@ -75,7 +75,7 @@ app/
 ├── pages/
 │   ├── index.vue                   # Dashboard: 3-column grid layout
 │   └── members.vue                 # Standalone members page
-├── pagescomposables/
+├── composables/
 │   └── useApi.js                   # Axios instance with base URL + credentials
 ├── stores/
 │   ├── authStore.js                # User session, login state, role toggle
